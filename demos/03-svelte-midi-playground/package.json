@@ -1,0 +1,26 @@
+{
+  "name": "tdwg-demo-03-svelte-midi",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
+  },
+  "dependencies": {
+    "three": "^0.165.0",
+    "webmidi": "^3.1.11"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^3.0.5",
+    "@sveltejs/kit": "^2.5.0",
+    "@sveltejs/vite-plugin-svelte": "^3.1.1",
+    "@types/three": "^0.165.0",
+    "svelte": "^4.2.19",
+    "svelte-check": "^3.8.0",
+    "typescript": "^5.5.0",
+    "vite": "^5.4.0"
+  }
+}

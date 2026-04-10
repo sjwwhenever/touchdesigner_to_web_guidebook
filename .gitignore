@@ -1,0 +1,20 @@
+# deps
+node_modules/
+.pnpm-store/
+
+# build outputs
+dist/
+build/
+.svelte-kit/
+_site/
+
+# env / local
+.env
+.env.local
+.DS_Store
+Thumbs.db
+
+# editor
+.vscode/
+.idea/
+*.swp

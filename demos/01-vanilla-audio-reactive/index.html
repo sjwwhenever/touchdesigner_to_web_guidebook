@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demo 1 · Audio Reactive (p5 + Web Audio)</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: #0a0a0f; color: #eee;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #start {
+      position: fixed; inset: 0; display: grid; place-items: center;
+      background: rgba(10, 10, 15, 0.9); z-index: 10;
+    }
+    #start button {
+      padding: 1rem 2rem; font-size: 1rem; border: 1px solid #666;
+      background: transparent; color: #eee; border-radius: 8px; cursor: pointer;
+    }
+    #start button:hover { background: #222; }
+    #hint { position: fixed; bottom: 12px; left: 12px; font-size: 12px; opacity: 0.5; }
+  </style>
+</head>
+<body>
+  <div id="start">
+    <button id="startBtn">Click to start (allow microphone)</button>
+  </div>
+  <div id="hint">Speak, clap, or play music near the mic.</div>
+
+  <!-- CDN: no build, no npm. This is on purpose. -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.2/lib/p5.min.js"></script>
+  <script>
+  // ============================================================
+  // TD node chain we are reproducing:
+  //   Audio Device In CHOP → Audio Spectrum CHOP → drives Circle SOP + color
+  //
+  // In the browser we use:
+  //   getUserMedia → AudioContext → AnalyserNode  (= CHOPs)
+  //   p5.js draw loop                              (= SOPs / TOPs)
+  // ============================================================
+
+  let analyser;            // Web Audio AnalyserNode — the "CHOP" side
+  let freqBins;            // Uint8Array, freq spectrum per frame
+  let timeBins;            // Uint8Array, waveform per frame
+  let smoothedLow  = 0;    // Lag CHOP equivalent (exponential smoothing)
+  let smoothedHigh = 0;
+
+  document.getElementById('startBtn').addEventListener('click', async () => {
+    // Browsers require a user gesture before AudioContext / getUserMedia.
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const ctx    = new (window.AudioContext || window.webkitAudioContext)();
+    const source = ctx.createMediaStreamSource(stream);
+
+    analyser = ctx.createAnalyser();
+    analyser.fftSize = 1024;         // must be a power of two
+    analyser.smoothingTimeConstant = 0.6;
+    source.connect(analyser);        // NB: do NOT connect to destination,
+                                     // otherwise you get feedback howl.
+
+    freqBins = new Uint8Array(analyser.frequencyBinCount); // 512 bins
+    timeBins = new Uint8Array(analyser.frequencyBinCount);
+
+    document.getElementById('start').style.display = 'none';
+  });
+
+  // p5 instance-mode sketch (clean scoping, no globals beyond `sketch`)
+  const sketch = (p) => {
+    p.setup = () => {
+      p.createCanvas(window.innerWidth, window.innerHeight);
+      p.colorMode(p.HSB, 360, 100, 100, 1);
+      p.noStroke();
+    };
+
+    p.windowResized = () => p.resizeCanvas(window.innerWidth, window.innerHeight);
+
+    p.draw = () => {
+      // Soft trail: draw a translucent rect over the previous frame.
+      p.background(240, 30, 6, 0.15);
+
+      if (!analyser) return; // waiting for user click
+
+      analyser.getByteFrequencyData(freqBins); // 0..255 per bin
+      analyser.getByteTimeDomainData(timeBins); // waveform, 128 = silence
+
+      // --- Analyze CHOP equivalents: split spectrum into bands ---
+      const low  = average(freqBins, 0,   16)  / 255; // ~ 0-700 Hz
+      const mid  = average(freqBins, 16,  64)  / 255;
+      const high = average(freqBins, 64,  200) / 255;
+
+      // --- Lag / Filter CHOP: exponential smoothing ---
+      smoothedLow  += (low  - smoothedLow)  * 0.15;
+      smoothedHigh += (high - smoothedHigh) * 0.1;
+
+      // --- Draw 1: central pulsing disc (radius driven by low band) ---
+      const cx = p.width / 2, cy = p.height / 2;
+      const baseR = Math.min(p.width, p.height) * 0.12;
+      const radius = baseR + smoothedLow * baseR * 4;
+      const hue = (p.frameCount * 0.3 + smoothedHigh * 120) % 360;
+      p.fill(hue, 80, 90, 0.9);
+      p.circle(cx, cy, radius * 2);
+
+      // --- Draw 2: radial spectrum ring (Replicator COMP equivalent) ---
+      const binsShown = 64;
+      const ringR = baseR * 2.2;
+      p.push();
+      p.translate(cx, cy);
+      for (let i = 0; i < binsShown; i++) {
+        const v = freqBins[i] / 255;
+        const angle = (i / binsShown) * p.TWO_PI;
+        const r1 = ringR;
+        const r2 = ringR + 10 + v * 200;
+        p.stroke(hue + i * 4, 70, 100, 0.8);
+        p.strokeWeight(3);
+        p.line(Math.cos(angle) * r1, Math.sin(angle) * r1,
+               Math.cos(angle) * r2, Math.sin(angle) * r2);
+      }
+      p.pop();
+      p.noStroke();
+
+      // --- Draw 3: waveform line across the bottom ---
+      p.stroke(180, 20, 100, 0.6);
+      p.strokeWeight(2);
+      p.noFill();
+      p.beginShape();
+      for (let i = 0; i < timeBins.length; i += 4) {
+        const x = (i / timeBins.length) * p.width;
+        const y = p.height - 40 - ((timeBins[i] - 128) / 128) * 40;
+        p.vertex(x, y);
+      }
+      p.endShape();
+      p.noStroke();
+    };
+  };
+
+  function average(arr, start, end) {
+    let sum = 0;
+    for (let i = start; i < end; i++) sum += arr[i];
+    return sum / (end - start);
+  }
+
+  new p5(sketch);
+  </script>
+</body>
+</html>

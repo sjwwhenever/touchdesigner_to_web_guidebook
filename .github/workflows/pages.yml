@@ -1,0 +1,122 @@
+name: Deploy demos to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # ------------ Demo 2 ------------
+      - name: Install Demo 2
+        working-directory: demos/02-vite-ts-shader-feedback
+        run: npm ci || npm install
+
+      - name: Build Demo 2
+        working-directory: demos/02-vite-ts-shader-feedback
+        env:
+          PAGES_BASE: /${{ github.event.repository.name }}/demo2/
+        run: npm run build
+
+      # ------------ Demo 3 ------------
+      - name: Install Demo 3
+        working-directory: demos/03-svelte-midi-playground
+        run: npm ci || npm install
+
+      - name: Build Demo 3
+        working-directory: demos/03-svelte-midi-playground
+        env:
+          PAGES_BASE: /${{ github.event.repository.name }}/demo3
+        run: npm run build
+
+      # ------------ Assemble _site ------------
+      - name: Assemble site
+        run: |
+          mkdir -p _site/demo1 _site/demo2 _site/demo3
+          cp -r demos/01-vanilla-audio-reactive/* _site/demo1/
+          cp -r demos/02-vite-ts-shader-feedback/dist/* _site/demo2/
+          cp -r demos/03-svelte-midi-playground/build/* _site/demo3/
+
+      - name: Write index page
+        run: |
+          cat > _site/index.html <<'HTML'
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <title>touchdesigner_to_web_guidebook · demos</title>
+            <style>
+              body { margin: 0; min-height: 100vh; background: #0a0a0f; color: #eee;
+                     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                     display: grid; place-items: center; padding: 40px; }
+              main { max-width: 640px; }
+              h1 { font-weight: 600; font-size: 20px; margin-bottom: 6px; }
+              p { opacity: 0.6; margin-top: 0; }
+              ol { padding: 0; list-style: none; margin-top: 32px; }
+              li { border: 1px solid #222; border-radius: 10px; padding: 18px 20px;
+                   margin-bottom: 14px; }
+              li a { color: #7dd3a8; text-decoration: none; font-weight: 500; }
+              li a:hover { text-decoration: underline; }
+              .sub { display: block; opacity: 0.55; font-size: 13px; margin-top: 4px; }
+              footer { margin-top: 40px; font-size: 12px; opacity: 0.4; }
+              footer a { color: inherit; }
+            </style>
+          </head>
+          <body>
+            <main>
+              <h1>touchdesigner_to_web_guidebook · demos</h1>
+              <p>TouchDesigner → Web migration tutorial · runnable examples</p>
+              <ol>
+                <li>
+                  <a href="./demo1/">Demo 1 · Audio reactive (vanilla + p5 + Web Audio)</a>
+                  <span class="sub">CHOP — microphone spectrum drives visuals. Zero build.</span>
+                </li>
+                <li>
+                  <a href="./demo2/">Demo 2 · Feedback shader (Vite + TS + Three.js)</a>
+                  <span class="sub">TOP — WebGLRenderTarget ping-pong + GLSL feedback loop.</span>
+                </li>
+                <li>
+                  <a href="./demo3/">Demo 3 · MIDI playground (SvelteKit + webmidi.js + Three.js)</a>
+                  <span class="sub">MIDI + SOP + TOP — controller-driven 3D scene with slider fallback.</span>
+                </li>
+              </ol>
+              <footer>
+                <a href="https://github.com/${{ github.repository }}">source on GitHub</a>
+              </footer>
+            </main>
+          </body>
+          </html>
+          HTML
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
