@@ -1,55 +1,159 @@
-# touchdesigner_to_web_guidebook
+# TouchDesigner → Web: It's Time to Take This Seriously
 
-> Everything TouchDesigner does, the web can do too — and with AI writing your code, learning the web stack has never been cheaper.
+> An open-source guide: a quick-reference for web alternatives to common TD nodes. You don't need to read it yourself — hand this doc to your AI Agent and let it look things up and write code for you. Includes three live demos.
 
 **中文:** [README.md](./README.md)
 
 ---
 
-This is an open-source tutorial for **migrating from TouchDesigner (TD) to the web frontend stack**. It is not an anti-TD project. It just offers a second path.
+## Why I wrote this
 
-## Who this is for
+I spent years working on TouchDesigner projects. Then vibe coding took off and I started building all sorts of things with web tech — web apps, desktop programs, mobile apps — and I realized: TD is really limited.
 
-- 🎛️ **Existing TD users** who want to port their work to the browser, or need a web stack for distribution and collaboration.
-- 🌱 **Beginners nudged toward TD by a teacher.** You don't actually have to start with TD. Web tech is free, open, has a larger job market, and AI can write most of the boilerplate for you.
-- 🤔 **Curious learners** who want to peek at what TD-style work looks like on the web before deciding whether to commit to TD.
+That's not to say TD isn't useful. It's genuinely convenient for installations, live performance, and VJ work. But the problem is, **TD's convenience is built on a closed ecosystem**, and that closedness is becoming its biggest bottleneck.
 
-## Core idea
+## TD's fundamental problem: not open enough
 
-In TD you drag a wire from *Audio Device In CHOP* to *Geometry COMP*. On the web you write a few lines of JavaScript instead — but:
+TD is commercial, closed-source software. Its API is closed — you can do some scripting with Python, but performance-critical parts require C++ plugins with a steep learning curve and a narrow ecosystem. The entire extension system relies on community volunteers; the company hasn't provided a truly open platform.
 
-1. **The web ecosystem has mature libraries** for nearly every TD node category.
-2. **AI-assisted coding** makes those few lines almost free to produce — as long as you know which library to ask for.
-3. **Deployment cost = 0**: a web piece is a single GitHub Pages URL you can send to anyone. No installer.
+Recently TD got MCP (Model Context Protocol) support, which looks like embracing AI. But look closer — **that's a community third-party project, not official**. What does that tell you? It tells you the company isn't actively pushing AI integration. MCP isn't a long-term solution — if they don't fundamentally open up TD's architecture and API, community patches alone can't reverse the trend.
 
-So this project isn't really "here's how to write JavaScript." It's:
+## A very telling example: MediaPipe
 
-- 📖 [**TD concept → Web library mapping table**](./docs/mapping-table.en.md)
-- 🤖 [**AI prompt cheat sheet**](./docs/ai-prompt-cheatsheet.en.md) — templates for asking AI to translate your TD idea into web code.
-- 🎨 **Three runnable demos** that together cover TD's four main families (TOP / SOP / CHOP / MIDI·OSC).
+In the TD community, MediaPipe (face tracking, gesture recognition, pose detection) is a hugely impactful capability. Many people think it's a TD feature.
 
-## The three demos
+But here's the truth: **TD's MediaPipe plugin works by launching a Chromium browser under the hood, running WebAssembly + WebGL, and piping results back to TD via WebSocket**. It's essentially a web app in a wrapper.
 
-| # | Folder | Stack | Audience | TD families |
+This used to make sense — after all, in TD you just drag a node and it works, no need to deal with web stuff yourself. But now? **You can just ask AI to call MediaPipe directly in a web page, done in a few sentences.** Meanwhile in TD, you still need to install plugins, configure environments, and deal with compatibility.
+
+This isn't an isolated case. TensorFlow.js, OpenCV's WASM builds, various ML models — these capabilities that TD users rely on are all web tech underneath. TD is just a middle layer, and that middle layer is becoming redundant.
+
+## Web + AI: the barrier no longer exists
+
+Ten years ago, choosing TD over writing code made perfect sense — coding was hard, dragging nodes was fast. But it's 2026:
+
+- **AI writes your code.** You describe the effect you want, AI produces it. Your role is director, not programmer.
+- **Browser-native capabilities have exploded.** Web Audio, WebGL, WebGPU, WebMIDI, WebSocket, camera access — all built into the browser, no plugins needed.
+- **The web is open.** Anyone can use it, any AI can read and write it, any platform can run it. No license fees, no resolution limits, no `.toe` files that only open on machines with TD installed.
+- **Deployment cost is zero.** One link, anyone in the world opens it on any device.
+
+More critically: **the web's openness and AI are natural complements.** AI can read all web documentation, generate all web code, debug all web errors. TD? AI can't even reliably find complete documentation for its node parameters.
+
+## For students currently learning TD
+
+Let me be direct: **stop relying on outdated advice.**
+
+Your teacher might have told you "TD is easy to pick up, no coding needed, all the artists use it." That was true a few years ago. But the situation is completely different now — AI has brought the coding barrier down to near zero, while TD's closed ecosystem makes it harder and harder to keep up.
+
+Learn a skill locked inside proprietary software, or learn an open tech stack with broad job prospects and full AI assistance? It's not a hard choice.
+
+Stay informed. Otherwise you'll have learned something for nothing.
+
+## What this project gives you
+
+You don't need to read this project cover to cover. **Just hand the repo link to your AI Agent and let it look up what you need.**
+
+It contains:
+
+1. **TD node → Web alternative quick-reference** (the mapping tables below) — AI looks it up and knows which library to use
+2. **AI prompt templates** — have AI directly implement the effect you want using web tech
+3. **Three runnable examples** — you can have AI reference and modify them
+
+---
+
+## TD → Web common alternatives
+
+### Image / Shader / Post-processing (TOP)
+
+| TD concept | Web alternative |
+|---|---|
+| GLSL TOP | [Three.js](https://threejs.org/) `ShaderMaterial` / [ogl](https://github.com/oframe/ogl) |
+| Feedback TOP | Three.js `WebGLRenderTarget` ping-pong |
+| Composite TOP / multi-pass | Three.js `EffectComposer` |
+| Noise TOP | GLSL snoise / [lygia](https://lygia.xyz/) |
+| Movie File In TOP | HTML `<video>` + Three.js `VideoTexture` |
+| Render TOP | `WebGLRenderer.render(scene, camera)` |
+
+### 3D Geometry (SOP)
+
+| TD concept | Web alternative |
+|---|---|
+| Geometry COMP + SOP | Three.js `Mesh` + `BufferGeometry` |
+| Sphere / Box / Grid SOP | Three.js built-in geometries |
+| Copy SOP / Replicator | `InstancedMesh` |
+| Particle SOP | `THREE.Points` + custom shader |
+| Transform SOP | `mesh.position / rotation / scale` |
+
+### Signal / Audio (CHOP)
+
+| TD concept | Web alternative |
+|---|---|
+| Audio Device In | `getUserMedia()` + `AudioContext` |
+| Audio Spectrum | `AnalyserNode.getByteFrequencyData()` |
+| Noise CHOP | [`simplex-noise`](https://www.npmjs.com/package/simplex-noise) |
+| LFO CHOP | `Math.sin(t * freq)` |
+| Timer CHOP | `performance.now()` / `requestAnimationFrame` |
+| Keyframe CHOP | [GSAP](https://gsap.com/) |
+
+### Interaction / Hardware
+
+| TD concept | Web alternative |
+|---|---|
+| MIDI In/Out | [`webmidi.js`](https://webmidijs.org/) |
+| OSC In/Out | [`osc-js`](https://github.com/adzialocha/osc-js) (needs WebSocket relay) |
+| Keyboard / Mouse / Touch | Native browser events |
+| WebSocket DAT | Native `WebSocket` |
+| HTTP (Web Client DAT) | Native `fetch` |
+
+### ML / Computer Vision
+
+| TD concept | Web alternative |
+|---|---|
+| MediaPipe plugin | [MediaPipe Web](https://developers.google.com/mediapipe/solutions/guide#web) (this is what the TD plugin uses under the hood) |
+| ML inference | [TensorFlow.js](https://www.tensorflow.org/js) / [ONNX Runtime Web](https://onnxruntime.ai/) |
+| OpenCV | [OpenCV.js](https://docs.opencv.org/4.x/d5/d10/tutorial_js_root.html) (WASM build) |
+
+> Full mapping table (with code snippets): [docs/mapping-table.en.md](./docs/mapping-table.en.md)
+
+---
+
+## How to use this project
+
+The simplest way: **hand this repo to your AI Agent as reference material.** For example, tell AI:
+
+```
+Using this repo [repo link] as reference, I want to build [describe the effect] in a web page.
+```
+
+AI will look up the mapping table, find the right libraries, reference the demo code, and write it for you.
+
+For more precise control over AI output, use this template:
+
+```
+I want to build an effect in the browser:
+  [one or two sentences describing it]
+
+Use the mapping table in this doc to pick the right libraries, then implement it.
+
+Constraints:
+- Language: [JS / TS]
+- Build: [single HTML file / Vite / SvelteKit]
+- Give me the minimum number of files
+```
+
+> More prompt examples and common AI pitfalls: [docs/ai-prompt-cheatsheet.en.md](./docs/ai-prompt-cheatsheet.en.md)
+
+---
+
+## Three demos
+
+| # | Folder | Stack | Difficulty | TD families covered |
 |---|---|---|---|---|
-| 1 | [`demos/01-vanilla-audio-reactive/`](./demos/01-vanilla-audio-reactive/) | Plain HTML + p5.js + Web Audio (CDN, no build) | Absolute beginner | CHOP (mic/spectrum), simple TOP/SOP |
-| 2 | [`demos/02-vite-ts-shader-feedback/`](./demos/02-vite-ts-shader-feedback/) | Vite + TypeScript + Three.js + GLSL | Intermediate | TOP (Feedback + GLSL + Composite) |
-| 3 | [`demos/03-svelte-midi-playground/`](./demos/03-svelte-midi-playground/) | SvelteKit + Three.js + webmidi.js | Comfortable | MIDI/OSC + SOP + TOP |
+| 1 | [`demos/01-vanilla-audio-reactive/`](./demos/01-vanilla-audio-reactive/) | Plain HTML + p5.js + Web Audio | Beginner | CHOP (mic/spectrum) |
+| 2 | [`demos/02-vite-ts-shader-feedback/`](./demos/02-vite-ts-shader-feedback/) | Vite + TypeScript + Three.js + GLSL | Intermediate | TOP (Feedback + GLSL) |
+| 3 | [`demos/03-svelte-midi-playground/`](./demos/03-svelte-midi-playground/) | SvelteKit + Three.js + webmidi.js | Comfortable | MIDI + SOP + TOP |
 
-> 🟢 **Live demo**: fork this repo, enable GitHub Pages, and visit `https://<your-username>.github.io/touchdesigner_to_web_guidebook/`. A ready-to-use GitHub Actions workflow is included.
-
-## Suggested learning path
-
-1. Read [`docs/why-web-over-td.en.md`](./docs/why-web-over-td.en.md) so you know why this project exists.
-2. Open [Demo 1](./demos/01-vanilla-audio-reactive/), talk into the mic, watch it move. Read the source (~150 lines).
-3. Skim the [mapping table](./docs/mapping-table.en.md). Pick the 3 TD nodes you use most — remember which library each maps to.
-4. Open [Demo 2](./demos/02-vite-ts-shader-feedback/). Run it. Tweak a few numbers in the GLSL shader.
-5. Open [Demo 3](./demos/03-svelte-midi-playground/). Connect a MIDI controller (or use the fallback on-screen sliders).
-6. Read the [AI prompt cheat sheet](./docs/ai-prompt-cheatsheet.en.md) and use the same templates to reimplement **your own** TD piece on the web.
-
-## Disclaimer
-
-**TouchDesigner is an excellent real-time visual tool**, especially for installations, live performance, and VJ work where hardware integration still matters. This project isn't here to pick a fight — it's here to tell you that, if your goal is web distribution, cross-platform collaboration, or simply expressing yourself in code rather than a node graph, **the web stack is a very real option**.
+---
 
 ## License
 
