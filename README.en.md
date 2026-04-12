@@ -6,7 +6,7 @@
 **An open-source guide: a quick-reference for web alternatives to common TD nodes.**
 You don't need to read it yourself — hand this doc to your AI Agent and let it look things up and write code for you. Includes three live demos.
 
-[![Author](https://img.shields.io/badge/Author-sjwwhenever-blue)](https://sjwwhenever.com) [![Xiaohongshu](https://img.shields.io/badge/Xiaohongshu-不可兼容-red)](https://sjwwhenever.com) [![中文](https://img.shields.io/badge/中文-README-green)](./README.md) [![License](https://img.shields.io/badge/License-MIT-yellow)](./LICENSE)
+[![Author](https://img.shields.io/badge/Author-sjwwhenever-blue)](https://sjwwhenever.xyz) [![Xiaohongshu](https://img.shields.io/badge/Xiaohongshu-不可兼容-red)](https://sjwwhenever.xyz) [![中文](https://img.shields.io/badge/中文-README-green)](./README.md) [![License](https://img.shields.io/badge/License-MIT-yellow)](./LICENSE)
 
 </td></tr>
 </table>
@@ -239,7 +239,7 @@ Constraints:
 <table>
 <tr><td>
 
-[![Author](https://img.shields.io/badge/Author-sjwwhenever-blue)](https://sjwwhenever.com) [![Xiaohongshu](https://img.shields.io/badge/Xiaohongshu-不可兼容-red)](https://sjwwhenever.com) [![License](https://img.shields.io/badge/License-MIT-yellow)](./LICENSE)
+[![Author](https://img.shields.io/badge/Author-sjwwhenever-blue)](https://sjwwhenever.xyz) [![Xiaohongshu](https://img.shields.io/badge/Xiaohongshu-不可兼容-red)](https://sjwwhenever.xyz) [![License](https://img.shields.io/badge/License-MIT-yellow)](./LICENSE)
 
 </td></tr>
 </table>
