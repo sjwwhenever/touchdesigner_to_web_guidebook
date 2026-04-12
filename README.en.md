@@ -25,7 +25,7 @@ You don't need to read it yourself — hand this doc to your AI Agent and let it
 
 > TD is commercial, closed-source software. Its API is closed — you can do some scripting with Python, but performance-critical parts require C++ plugins with a steep learning curve and a narrow ecosystem. The entire extension system relies on community volunteers; the company hasn't provided a truly open platform.
 >
-> Recently TD got MCP (Model Context Protocol) support, which looks like embracing AI. But look closer — **that's a community third-party project, not official**. What does that tell you? It tells you the company isn't actively pushing AI integration. MCP isn't a long-term solution — if they don't fundamentally open up TD's architecture and API, community patches alone can't reverse the trend.
+> Recently TD got MCP (Model Context Protocol) support, which looks like embracing AI. But look closer — **that's a community third-party project (e.g. [touchdesigner-mcp](https://github.com/8beeeaaat/touchdesigner-mcp), kudos to the author), not official**. What does that tell you? It tells you the company isn't actively pushing AI integration. MCP isn't a long-term solution — if they don't fundamentally open up TD's architecture and API, community patches alone can't reverse the trend.
 
 ---
 
@@ -228,11 +228,11 @@ Constraints:
 
 ## Three demos
 
-| # | Folder | Stack | Difficulty | TD families covered |
-|---|---|---|---|---|
-| 1 | [`demos/01-vanilla-audio-reactive/`](./demos/01-vanilla-audio-reactive/) | Plain HTML + p5.js + Web Audio | Beginner | CHOP (mic/spectrum) |
-| 2 | [`demos/02-vite-ts-shader-feedback/`](./demos/02-vite-ts-shader-feedback/) | Vite + TypeScript + Three.js + GLSL | Intermediate | TOP (Feedback + GLSL) |
-| 3 | [`demos/03-svelte-midi-playground/`](./demos/03-svelte-midi-playground/) | SvelteKit + Three.js + webmidi.js | Comfortable | MIDI + SOP + TOP |
+| # | Live | Source | Stack | Difficulty | TD families covered |
+|---|---|---|---|---|---|
+| 1 | [▶ Open](https://sjwwhenever.github.io/touchdesigner_to_web_guidebook/demo1/) | [`demos/01-vanilla-audio-reactive/`](./demos/01-vanilla-audio-reactive/) | Plain HTML + p5.js + Web Audio | Beginner | CHOP (mic/spectrum) |
+| 2 | [▶ Open](https://sjwwhenever.github.io/touchdesigner_to_web_guidebook/demo2/) | [`demos/02-vite-ts-shader-feedback/`](./demos/02-vite-ts-shader-feedback/) | Vite + TypeScript + Three.js + GLSL | Intermediate | TOP (Feedback + GLSL) |
+| 3 | [▶ Open](https://sjwwhenever.github.io/touchdesigner_to_web_guidebook/demo3/) | [`demos/03-svelte-midi-playground/`](./demos/03-svelte-midi-playground/) | SvelteKit + Three.js + webmidi.js | Comfortable | MIDI + SOP + TOP |
 
 ---
 
