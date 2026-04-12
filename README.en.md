@@ -6,7 +6,7 @@
 **An open-source guide: a quick-reference for web alternatives to common TD nodes.**
 You don't need to read it yourself — hand this doc to your AI Agent and let it look things up and write code for you. Includes three live demos.
 
-**Author** [sjwwhenever](https://sjwwhenever.com) | **Xiaohongshu (RED)** 不可兼容 | **中文** [README.md](./README.md)
+[![Author](https://img.shields.io/badge/Author-sjwwhenever-blue)](https://sjwwhenever.com) [![Xiaohongshu](https://img.shields.io/badge/Xiaohongshu-不可兼容-red)](https://sjwwhenever.com) [![中文](https://img.shields.io/badge/中文-README-green)](./README.md) [![License](https://img.shields.io/badge/License-MIT-yellow)](./LICENSE)
 
 </td></tr>
 </table>
@@ -31,13 +31,14 @@ You don't need to read it yourself — hand this doc to your AI Agent and let it
 
 ## A very telling example: MediaPipe
 
-> In the TD community, MediaPipe (face tracking, gesture recognition, pose detection) is a hugely impactful capability. Many people think it's a TD feature.
->
-> But here's the truth: **TD's MediaPipe plugin works by launching a Chromium browser under the hood, running WebAssembly + WebGL, and piping results back to TD via WebSocket**. It's essentially a web app in a wrapper.
->
-> This used to make sense — after all, in TD you just drag a node and it works, no need to deal with web stuff yourself. But now? **You can just ask AI to call MediaPipe directly in a web page, done in a few sentences.** Meanwhile in TD, you still need to install plugins, configure environments, and deal with compatibility.
->
-> This isn't an isolated case. TensorFlow.js, OpenCV's WASM builds, various ML models — these capabilities that TD users rely on are all web tech underneath. TD is just a middle layer, and that middle layer is becoming redundant.
+> [!WARNING]
+> TD's MediaPipe plugin works by launching a Chromium browser under the hood, running WebAssembly + WebGL, and piping results back to TD via WebSocket. **It's essentially a web app in a wrapper.**
+
+In the TD community, MediaPipe (face tracking, gesture recognition, pose detection) is a hugely impactful capability. Many people think it's a TD feature.
+
+This used to make sense — after all, in TD you just drag a node and it works, no need to deal with web stuff yourself. But now? **You can just ask AI to call MediaPipe directly in a web page, done in a few sentences.** Meanwhile in TD, you still need to install plugins, configure environments, and deal with compatibility.
+
+This isn't an isolated case. TensorFlow.js, OpenCV's WASM builds, various ML models — these capabilities that TD users rely on are all web tech underneath. TD is just a middle layer, and that middle layer is becoming redundant.
 
 ---
 
@@ -49,13 +50,13 @@ You don't need to read it yourself — hand this doc to your AI Agent and let it
 <tr>
 <td width="50%">
 
-**AI writes your code**
+**🤖 AI writes your code**
 You describe the effect you want, AI produces it. Your role is director, not programmer.
 
 </td>
 <td width="50%">
 
-**Browser-native capabilities have exploded**
+**🌐 Browser-native capabilities have exploded**
 Web Audio, WebGL, WebGPU, WebMIDI, WebSocket, camera access — all built into the browser, no plugins needed.
 
 </td>
@@ -63,56 +64,59 @@ Web Audio, WebGL, WebGPU, WebMIDI, WebSocket, camera access — all built into t
 <tr>
 <td width="50%">
 
-**The web is open**
+**🔓 The web is open**
 Anyone can use it, any AI can read and write it, any platform can run it. No license fees, no resolution limits, no `.toe` files that only open on machines with TD installed.
 
 </td>
 <td width="50%">
 
-**Deployment cost is zero**
+**🚀 Deployment cost is zero**
 One link, anyone in the world opens it on any device.
 
 </td>
 </tr>
 </table>
 
+> [!IMPORTANT]
 > **The web's openness and AI are natural complements.** AI can read all web documentation, generate all web code, debug all web errors. TD? AI can't even reliably find complete documentation for its node parameters.
 
 ---
 
 ## For students currently learning TD
 
-> Let me be direct: **stop relying on outdated advice.**
->
-> Your teacher might have told you "TD is easy to pick up, no coding needed, all the artists use it." That was true a few years ago. But the situation is completely different now — AI has brought the coding barrier down to near zero, while TD's closed ecosystem makes it harder and harder to keep up.
->
-> Learn a skill locked inside proprietary software, or learn an open tech stack with broad job prospects and full AI assistance? It's not a hard choice.
->
-> Stay informed. Otherwise you'll have learned something for nothing.
+> [!CAUTION]
+> **Stop relying on outdated advice.**
+
+Your teacher might have told you "TD is easy to pick up, no coding needed, all the artists use it." That was true a few years ago. But the situation is completely different now — AI has brought the coding barrier down to near zero, while TD's closed ecosystem makes it harder and harder to keep up.
+
+Learn a skill locked inside proprietary software, or learn an open tech stack with broad job prospects and full AI assistance? It's not a hard choice.
+
+Stay informed. Otherwise you'll have learned something for nothing.
 
 ---
 
 ## What this project gives you
 
+> [!TIP]
 > You don't need to read this project cover to cover. **Just hand the repo link to your AI Agent and let it look up what you need.**
 
 <table>
 <tr>
 <td width="33%">
 
-**Quick-reference**
+**📖 Quick-reference**
 TD node → Web alternative mapping tables. AI looks it up and knows which library to use.
 
 </td>
 <td width="33%">
 
-**Prompt templates**
+**💬 Prompt templates**
 Have AI directly implement the effect you want using web tech.
 
 </td>
 <td width="33%">
 
-**Three demos**
+**🎨 Three demos**
 Runnable examples that you can have AI reference and modify.
 
 </td>
@@ -124,7 +128,7 @@ Runnable examples that you can have AI reference and modify.
 ## TD → Web common alternatives
 
 <details>
-<summary><strong>Image / Shader / Post-processing (TOP)</strong></summary>
+<summary><strong>🖼️ Image / Shader / Post-processing (TOP)</strong></summary>
 
 | TD concept | Web alternative |
 |---|---|
@@ -138,7 +142,7 @@ Runnable examples that you can have AI reference and modify.
 </details>
 
 <details>
-<summary><strong>3D Geometry (SOP)</strong></summary>
+<summary><strong>📐 3D Geometry (SOP)</strong></summary>
 
 | TD concept | Web alternative |
 |---|---|
@@ -151,7 +155,7 @@ Runnable examples that you can have AI reference and modify.
 </details>
 
 <details>
-<summary><strong>Signal / Audio (CHOP)</strong></summary>
+<summary><strong>🎵 Signal / Audio (CHOP)</strong></summary>
 
 | TD concept | Web alternative |
 |---|---|
@@ -165,7 +169,7 @@ Runnable examples that you can have AI reference and modify.
 </details>
 
 <details>
-<summary><strong>Interaction / Hardware</strong></summary>
+<summary><strong>🎛️ Interaction / Hardware</strong></summary>
 
 | TD concept | Web alternative |
 |---|---|
@@ -178,7 +182,7 @@ Runnable examples that you can have AI reference and modify.
 </details>
 
 <details>
-<summary><strong>ML / Computer Vision</strong></summary>
+<summary><strong>🧠 ML / Computer Vision</strong></summary>
 
 | TD concept | Web alternative |
 |---|---|
@@ -194,6 +198,7 @@ Runnable examples that you can have AI reference and modify.
 
 ## How to use this project
 
+> [!NOTE]
 > The simplest way: **hand this repo to your AI Agent as reference material.**
 
 ```
@@ -234,7 +239,7 @@ Constraints:
 <table>
 <tr><td>
 
-**Author** [sjwwhenever](https://sjwwhenever.com) | **Xiaohongshu (RED)** 不可兼容 | **License** [MIT](./LICENSE)
+[![Author](https://img.shields.io/badge/Author-sjwwhenever-blue)](https://sjwwhenever.com) [![Xiaohongshu](https://img.shields.io/badge/Xiaohongshu-不可兼容-red)](https://sjwwhenever.com) [![License](https://img.shields.io/badge/License-MIT-yellow)](./LICENSE)
 
 </td></tr>
 </table>
