@@ -1,6 +1,8 @@
 # TouchDesigner → Web: It's Time to Take This Seriously
 
-> An open-source guide: a quick-reference for web alternatives to common TD nodes. You don't need to read it yourself — hand this doc to your AI Agent and let it look things up and write code for you. Includes three live demos.
+## An open-source guide: a quick-reference for web alternatives to common TD nodes. You don't need to read it yourself — hand this doc to your AI Agent and let it look things up and write code for you. Includes three live demos.
+
+**Author:** [sjwwhenever](https://sjwwhenever.com) | **Xiaohongshu (RED):** 不可兼容
 
 **中文:** [README.md](./README.md)
 
@@ -154,6 +156,10 @@ Constraints:
 | 3 | [`demos/03-svelte-midi-playground/`](./demos/03-svelte-midi-playground/) | SvelteKit + Three.js + webmidi.js | Comfortable | MIDI + SOP + TOP |
 
 ---
+
+---
+
+**Author:** [sjwwhenever](https://sjwwhenever.com) | **Xiaohongshu (RED):** 不可兼容
 
 ## License
 
