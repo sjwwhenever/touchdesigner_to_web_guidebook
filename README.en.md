@@ -1,71 +1,130 @@
 # TouchDesigner → Web: It's Time to Take This Seriously
 
-## An open-source guide: a quick-reference for web alternatives to common TD nodes. You don't need to read it yourself — hand this doc to your AI Agent and let it look things up and write code for you. Includes three live demos.
+<table>
+<tr><td>
 
-**Author:** [sjwwhenever](https://sjwwhenever.com) | **Xiaohongshu (RED):** 不可兼容
+**An open-source guide: a quick-reference for web alternatives to common TD nodes.**
+You don't need to read it yourself — hand this doc to your AI Agent and let it look things up and write code for you. Includes three live demos.
 
-**中文:** [README.md](./README.md)
+**Author** [sjwwhenever](https://sjwwhenever.com) | **Xiaohongshu (RED)** 不可兼容 | **中文** [README.md](./README.md)
+
+</td></tr>
+</table>
 
 ---
 
 ## Why I wrote this
 
-I spent years working on TouchDesigner projects. Then vibe coding took off and I started building all sorts of things with web tech — web apps, desktop programs, mobile apps — and I realized: TD is really limited.
+> I spent years working on TouchDesigner projects. Then vibe coding took off and I started building all sorts of things with web tech — web apps, desktop programs, mobile apps — and I realized: TD is really limited.
+>
+> That's not to say TD isn't useful. It's genuinely convenient for installations, live performance, and VJ work. But the problem is, **TD's convenience is built on a closed ecosystem**, and that closedness is becoming its biggest bottleneck.
 
-That's not to say TD isn't useful. It's genuinely convenient for installations, live performance, and VJ work. But the problem is, **TD's convenience is built on a closed ecosystem**, and that closedness is becoming its biggest bottleneck.
+---
 
 ## TD's fundamental problem: not open enough
 
-TD is commercial, closed-source software. Its API is closed — you can do some scripting with Python, but performance-critical parts require C++ plugins with a steep learning curve and a narrow ecosystem. The entire extension system relies on community volunteers; the company hasn't provided a truly open platform.
+> TD is commercial, closed-source software. Its API is closed — you can do some scripting with Python, but performance-critical parts require C++ plugins with a steep learning curve and a narrow ecosystem. The entire extension system relies on community volunteers; the company hasn't provided a truly open platform.
+>
+> Recently TD got MCP (Model Context Protocol) support, which looks like embracing AI. But look closer — **that's a community third-party project, not official**. What does that tell you? It tells you the company isn't actively pushing AI integration. MCP isn't a long-term solution — if they don't fundamentally open up TD's architecture and API, community patches alone can't reverse the trend.
 
-Recently TD got MCP (Model Context Protocol) support, which looks like embracing AI. But look closer — **that's a community third-party project, not official**. What does that tell you? It tells you the company isn't actively pushing AI integration. MCP isn't a long-term solution — if they don't fundamentally open up TD's architecture and API, community patches alone can't reverse the trend.
+---
 
 ## A very telling example: MediaPipe
 
-In the TD community, MediaPipe (face tracking, gesture recognition, pose detection) is a hugely impactful capability. Many people think it's a TD feature.
+> In the TD community, MediaPipe (face tracking, gesture recognition, pose detection) is a hugely impactful capability. Many people think it's a TD feature.
+>
+> But here's the truth: **TD's MediaPipe plugin works by launching a Chromium browser under the hood, running WebAssembly + WebGL, and piping results back to TD via WebSocket**. It's essentially a web app in a wrapper.
+>
+> This used to make sense — after all, in TD you just drag a node and it works, no need to deal with web stuff yourself. But now? **You can just ask AI to call MediaPipe directly in a web page, done in a few sentences.** Meanwhile in TD, you still need to install plugins, configure environments, and deal with compatibility.
+>
+> This isn't an isolated case. TensorFlow.js, OpenCV's WASM builds, various ML models — these capabilities that TD users rely on are all web tech underneath. TD is just a middle layer, and that middle layer is becoming redundant.
 
-But here's the truth: **TD's MediaPipe plugin works by launching a Chromium browser under the hood, running WebAssembly + WebGL, and piping results back to TD via WebSocket**. It's essentially a web app in a wrapper.
-
-This used to make sense — after all, in TD you just drag a node and it works, no need to deal with web stuff yourself. But now? **You can just ask AI to call MediaPipe directly in a web page, done in a few sentences.** Meanwhile in TD, you still need to install plugins, configure environments, and deal with compatibility.
-
-This isn't an isolated case. TensorFlow.js, OpenCV's WASM builds, various ML models — these capabilities that TD users rely on are all web tech underneath. TD is just a middle layer, and that middle layer is becoming redundant.
+---
 
 ## Web + AI: the barrier no longer exists
 
-Ten years ago, choosing TD over writing code made perfect sense — coding was hard, dragging nodes was fast. But it's 2026:
+> Ten years ago, choosing TD over writing code made perfect sense — coding was hard, dragging nodes was fast. But it's 2026:
 
-- **AI writes your code.** You describe the effect you want, AI produces it. Your role is director, not programmer.
-- **Browser-native capabilities have exploded.** Web Audio, WebGL, WebGPU, WebMIDI, WebSocket, camera access — all built into the browser, no plugins needed.
-- **The web is open.** Anyone can use it, any AI can read and write it, any platform can run it. No license fees, no resolution limits, no `.toe` files that only open on machines with TD installed.
-- **Deployment cost is zero.** One link, anyone in the world opens it on any device.
+<table>
+<tr>
+<td width="50%">
 
-More critically: **the web's openness and AI are natural complements.** AI can read all web documentation, generate all web code, debug all web errors. TD? AI can't even reliably find complete documentation for its node parameters.
+**AI writes your code**
+You describe the effect you want, AI produces it. Your role is director, not programmer.
+
+</td>
+<td width="50%">
+
+**Browser-native capabilities have exploded**
+Web Audio, WebGL, WebGPU, WebMIDI, WebSocket, camera access — all built into the browser, no plugins needed.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+**The web is open**
+Anyone can use it, any AI can read and write it, any platform can run it. No license fees, no resolution limits, no `.toe` files that only open on machines with TD installed.
+
+</td>
+<td width="50%">
+
+**Deployment cost is zero**
+One link, anyone in the world opens it on any device.
+
+</td>
+</tr>
+</table>
+
+> **The web's openness and AI are natural complements.** AI can read all web documentation, generate all web code, debug all web errors. TD? AI can't even reliably find complete documentation for its node parameters.
+
+---
 
 ## For students currently learning TD
 
-Let me be direct: **stop relying on outdated advice.**
+> Let me be direct: **stop relying on outdated advice.**
+>
+> Your teacher might have told you "TD is easy to pick up, no coding needed, all the artists use it." That was true a few years ago. But the situation is completely different now — AI has brought the coding barrier down to near zero, while TD's closed ecosystem makes it harder and harder to keep up.
+>
+> Learn a skill locked inside proprietary software, or learn an open tech stack with broad job prospects and full AI assistance? It's not a hard choice.
+>
+> Stay informed. Otherwise you'll have learned something for nothing.
 
-Your teacher might have told you "TD is easy to pick up, no coding needed, all the artists use it." That was true a few years ago. But the situation is completely different now — AI has brought the coding barrier down to near zero, while TD's closed ecosystem makes it harder and harder to keep up.
-
-Learn a skill locked inside proprietary software, or learn an open tech stack with broad job prospects and full AI assistance? It's not a hard choice.
-
-Stay informed. Otherwise you'll have learned something for nothing.
+---
 
 ## What this project gives you
 
-You don't need to read this project cover to cover. **Just hand the repo link to your AI Agent and let it look up what you need.**
+> You don't need to read this project cover to cover. **Just hand the repo link to your AI Agent and let it look up what you need.**
 
-It contains:
+<table>
+<tr>
+<td width="33%">
 
-1. **TD node → Web alternative quick-reference** (the mapping tables below) — AI looks it up and knows which library to use
-2. **AI prompt templates** — have AI directly implement the effect you want using web tech
-3. **Three runnable examples** — you can have AI reference and modify them
+**Quick-reference**
+TD node → Web alternative mapping tables. AI looks it up and knows which library to use.
+
+</td>
+<td width="33%">
+
+**Prompt templates**
+Have AI directly implement the effect you want using web tech.
+
+</td>
+<td width="33%">
+
+**Three demos**
+Runnable examples that you can have AI reference and modify.
+
+</td>
+</tr>
+</table>
 
 ---
 
 ## TD → Web common alternatives
 
-### Image / Shader / Post-processing (TOP)
+<details>
+<summary><strong>Image / Shader / Post-processing (TOP)</strong></summary>
 
 | TD concept | Web alternative |
 |---|---|
@@ -76,7 +135,10 @@ It contains:
 | Movie File In TOP | HTML `<video>` + Three.js `VideoTexture` |
 | Render TOP | `WebGLRenderer.render(scene, camera)` |
 
-### 3D Geometry (SOP)
+</details>
+
+<details>
+<summary><strong>3D Geometry (SOP)</strong></summary>
 
 | TD concept | Web alternative |
 |---|---|
@@ -86,7 +148,10 @@ It contains:
 | Particle SOP | `THREE.Points` + custom shader |
 | Transform SOP | `mesh.position / rotation / scale` |
 
-### Signal / Audio (CHOP)
+</details>
+
+<details>
+<summary><strong>Signal / Audio (CHOP)</strong></summary>
 
 | TD concept | Web alternative |
 |---|---|
@@ -97,7 +162,10 @@ It contains:
 | Timer CHOP | `performance.now()` / `requestAnimationFrame` |
 | Keyframe CHOP | [GSAP](https://gsap.com/) |
 
-### Interaction / Hardware
+</details>
+
+<details>
+<summary><strong>Interaction / Hardware</strong></summary>
 
 | TD concept | Web alternative |
 |---|---|
@@ -107,7 +175,10 @@ It contains:
 | WebSocket DAT | Native `WebSocket` |
 | HTTP (Web Client DAT) | Native `fetch` |
 
-### ML / Computer Vision
+</details>
+
+<details>
+<summary><strong>ML / Computer Vision</strong></summary>
 
 | TD concept | Web alternative |
 |---|---|
@@ -115,21 +186,22 @@ It contains:
 | ML inference | [TensorFlow.js](https://www.tensorflow.org/js) / [ONNX Runtime Web](https://onnxruntime.ai/) |
 | OpenCV | [OpenCV.js](https://docs.opencv.org/4.x/d5/d10/tutorial_js_root.html) (WASM build) |
 
+</details>
+
 > Full mapping table (with code snippets): [docs/mapping-table.en.md](./docs/mapping-table.en.md)
 
 ---
 
 ## How to use this project
 
-The simplest way: **hand this repo to your AI Agent as reference material.** For example, tell AI:
+> The simplest way: **hand this repo to your AI Agent as reference material.**
 
 ```
 Using this repo [repo link] as reference, I want to build [describe the effect] in a web page.
 ```
 
-AI will look up the mapping table, find the right libraries, reference the demo code, and write it for you.
-
-For more precise control over AI output, use this template:
+<details>
+<summary><strong>More precise prompt template</strong></summary>
 
 ```
 I want to build an effect in the browser:
@@ -145,6 +217,8 @@ Constraints:
 
 > More prompt examples and common AI pitfalls: [docs/ai-prompt-cheatsheet.en.md](./docs/ai-prompt-cheatsheet.en.md)
 
+</details>
+
 ---
 
 ## Three demos
@@ -157,10 +231,10 @@ Constraints:
 
 ---
 
----
+<table>
+<tr><td>
 
-**Author:** [sjwwhenever](https://sjwwhenever.com) | **Xiaohongshu (RED):** 不可兼容
+**Author** [sjwwhenever](https://sjwwhenever.com) | **Xiaohongshu (RED)** 不可兼容 | **License** [MIT](./LICENSE)
 
-## License
-
-[MIT](./LICENSE)
+</td></tr>
+</table>
