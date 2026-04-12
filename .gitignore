@@ -14,6 +14,9 @@ _site/
 .DS_Store
 Thumbs.db
 
+# drafts
+*.draft.md
+
 # editor
 .vscode/
 .idea/
