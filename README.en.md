@@ -129,88 +129,18 @@ Runnable examples that you can have AI reference and modify.
 
 > If you haven't touched TD yet but you're curious what people use it for — this section maps those "classic TD effects" to their web equivalents.
 
-<table>
-<tr>
-<td width="50%">
-
-**📊 Data visualization**
-Animated charts, network graphs, geographic trail animations.
-→ Use [D3.js](https://d3js.org/) / [Observable Plot](https://observablehq.com/plot/) / [echarts](https://echarts.apache.org/) / [deck.gl](https://deck.gl/).
-
-</td>
-<td width="50%">
-
-**✨ Particle systems**
-Tens of thousands of points reacting to mouse, audio, or flow fields.
-→ [`THREE.Points`](https://threejs.org/docs/#api/en/objects/Points) + custom shaders / [regl](https://github.com/regl-project/regl) / [TSL](https://github.com/mrdoob/three.js/wiki/Three.js-Shading-Language).
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**🖐️ Gesture control**
-Track fingers / pose from a webcam, drive visual parameters.
-→ [MediaPipe Web](https://developers.google.com/mediapipe/solutions/guide#web) Hands / Pose / FaceLandmarker — **the same engine TD uses underneath**.
-
-</td>
-<td width="50%">
-
-**🎵 Audio-visual interaction**
-Mic or music driving visuals — spectrum, beat, amplitude.
-→ Web Audio `AnalyserNode` + Three.js / p5.js, plus [Tone.js](https://tonejs.github.io/) for precise beat analysis.
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**🌀 Real-time shaders / VJ visuals**
-GLSL procedural textures, distortions, glow, feedback loops.
-→ Three.js `ShaderMaterial` + `EffectComposer`, or just use [Hydra](https://hydra.ojack.xyz/) (a VJ tool that runs natively in the browser).
-
-</td>
-<td width="50%">
-
-**🎭 Face filters / AR stickers**
-Track 468 facial landmarks, attach animated masks.
-→ MediaPipe FaceLandmarker + Three.js — covers everything the TD MediaPipe plugin does.
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**🎮 Interactive installations / touch displays**
-Touch / mouse / keyboard / gamepad triggering animations, multi-touch.
-→ Native browser `PointerEvent` + [Hammer.js](https://hammerjs.github.io/) / [Gamepad API](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API).
-
-</td>
-<td width="50%">
-
-**🎹 MIDI / OSC controllers**
-Live tweaking parameters with a MIDI controller or OSC signals.
-→ [`webmidi.js`](https://webmidijs.org/) (direct MIDI from the browser), [`osc-js`](https://github.com/adzialocha/osc-js) (OSC over WebSocket).
-
-</td>
-</tr>
-<tr>
-<td width="50%">
-
-**📐 Projection mapping / multi-screen**
-Wrap visuals onto irregular surfaces, stitch across multiple projectors.
-→ Three.js `OrthographicCamera` + UV warping, or [maptastic.js](https://github.com/glowbox/maptasticjs).
-
-</td>
-<td width="50%">
-
-**🎬 Generative animation / procedural graphics**
-Noise, L-systems, flow fields making graphics that "move on their own".
-→ [p5.js](https://p5js.org/) is the fastest entry point; level up with Three.js + GLSL.
-
-</td>
-</tr>
-</table>
+| Classic TD use case | How to do it on the web |
+|---|---|
+| **📊 Data visualization**<br/><sub>Animated charts, network graphs, geographic trail animations</sub> | [D3.js](https://d3js.org/) / [Observable Plot](https://observablehq.com/plot/) / [echarts](https://echarts.apache.org/) / [deck.gl](https://deck.gl/) |
+| **✨ Particle systems**<br/><sub>Tens of thousands of points reacting to mouse, audio, flow fields</sub> | [`THREE.Points`](https://threejs.org/docs/#api/en/objects/Points) + custom shaders / [regl](https://github.com/regl-project/regl) / [TSL](https://github.com/mrdoob/three.js/wiki/Three.js-Shading-Language) |
+| **🖐️ Gesture control**<br/><sub>Track fingers / pose from a webcam, drive visual parameters</sub> | [MediaPipe Web](https://developers.google.com/mediapipe/solutions/guide#web) Hands / Pose / FaceLandmarker (**the same engine TD uses underneath**) |
+| **🎵 Audio-visual interaction**<br/><sub>Mic or music driving visuals — spectrum, beat, amplitude</sub> | Web Audio `AnalyserNode` + Three.js / p5.js, plus [Tone.js](https://tonejs.github.io/) for precise beat analysis |
+| **🌀 Real-time shaders / VJ visuals**<br/><sub>GLSL procedural textures, distortions, glow, feedback loops</sub> | Three.js `ShaderMaterial` + `EffectComposer`, or [Hydra](https://hydra.ojack.xyz/) (a VJ tool that runs natively in the browser) |
+| **🎭 Face filters / AR stickers**<br/><sub>Track 468 facial landmarks, attach animated masks</sub> | [MediaPipe FaceLandmarker](https://developers.google.com/mediapipe/solutions/vision/face_landmarker) + Three.js |
+| **🎮 Interactive installations / touch displays**<br/><sub>Touch / mouse / keyboard / gamepad triggering animations, multi-touch</sub> | Native browser `PointerEvent` + [Hammer.js](https://hammerjs.github.io/) / [Gamepad API](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API) |
+| **🎹 MIDI / OSC controllers**<br/><sub>Live tweaking parameters with a MIDI controller or OSC signals</sub> | [`webmidi.js`](https://webmidijs.org/) (direct MIDI from the browser), [`osc-js`](https://github.com/adzialocha/osc-js) (OSC over WebSocket) |
+| **📐 Projection mapping / multi-screen**<br/><sub>Wrap visuals onto irregular surfaces, stitch across multiple projectors</sub> | Three.js `OrthographicCamera` + UV warping, or [maptastic.js](https://github.com/glowbox/maptasticjs) |
+| **🎬 Generative animation / procedural graphics**<br/><sub>Noise, L-systems, flow fields making graphics that "move on their own"</sub> | [p5.js](https://p5js.org/) is the fastest entry point; level up with Three.js + GLSL |
 
 > [!NOTE]
 > Notice the pattern: **every TD use case you can think of has a ready-made web library doing the same thing**. The difference is — the web version is open, cross-platform, and AI can write it for you directly.
